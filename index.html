@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GestorPro & Antigravity Studio — Gestão, IA Logos & Projetos</title>
+  <meta name="description" content="App completo para cadastrar empresas, criar logos e banners com IA, catálogo de projetos Antigravity e conversor de print para aplicação funcional." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo" onclick="switchTab('tab-empresas')">
+        <div class="logo-icon">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <rect x="2" y="2" width="10" height="10" rx="3" fill="url(#g1)"/>
+            <rect x="16" y="2" width="10" height="10" rx="3" fill="url(#g2)" opacity=".8"/>
+            <rect x="2" y="16" width="10" height="10" rx="3" fill="url(#g2)" opacity=".8"/>
+            <rect x="16" y="16" width="10" height="10" rx="3" fill="url(#g1)"/>
+            <defs>
+              <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#a78bfa"/>
+                <stop offset="100%" stop-color="#6366f1"/>
+              </linearGradient>
+              <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#38bdf8"/>
+                <stop offset="100%" stop-color="#818cf8"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="logo-info">
+          <span class="logo-text">GestorPro <span class="tag-version">STUDIO</span></span>
+          <span class="logo-sub">Empresas & Projetos Antigravity</span>
+        </div>
+      </div>
+
+      <!-- MAIN NAVIGATION TABS -->
+      <nav class="nav-tabs">
+        <button class="nav-tab active" id="nav-empresas" onclick="switchTab('tab-empresas')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 7v14M21 7v14M6 7V3h12v4M9 10h1M14 10h1M9 14h1M14 14h1M9 18h1M14 18h1"/></svg>
+          Empresas (<span id="tab-count-empresas">0</span>)
+        </button>
+        <button class="nav-tab" id="nav-projetos" onclick="switchTab('tab-projetos')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Projetos Antigravity (<span id="tab-count-projetos">18</span>)
+        </button>
+        <button class="nav-tab" id="nav-print" onclick="switchTab('tab-print')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Print para Projeto <span class="pill-new">IA</span>
+        </button>
+        <button class="nav-tab" id="nav-logo" onclick="switchTab('tab-logo')">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Estúdio Logo & Banner
+        </button>
+      </nav>
+
+      <div class="header-actions">
+        <button class="btn-secondary btn-sm" onclick="exportarBackup()" title="Baixar cópia de segurança em JSON">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 2v8m0 0l3-3m-3 3L5 7M2 13h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Exportar
+        </button>
+        <button class="btn-secondary btn-sm" onclick="document.getElementById('input-import').click()" title="Restaurar backup JSON">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 10V2m0 0L5 5m3-3l3 3M2 13h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Importar
+        </button>
+        <input type="file" id="input-import" accept=".json" style="display:none" onchange="importarBackup(event)" />
+        <button class="btn-header" id="btn-open-form" onclick="openModal()">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Nova Empresa
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================== -->
+  <!-- TAB 1: EMPRESAS CADASTRADAS                     -->
+  <!-- ============================================== -->
+  <div id="tab-empresas" class="tab-content active">
+    <!-- HERO / STATS -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-title">
+          <span class="badge">Gestão Centralizada de Empresas</span>
+          <h1>Cadastre, gerencie e conecte<br /><span class="gradient-text">seus projetos e clientes</span></h1>
+          <p>Salve todos os dados cadastrais, logos, banners e vincule diretamente a projetos desenvolvidos no Antigravity.</p>
+        </div>
+        <div class="stats-row" id="stats-row">
+          <div class="stat-card">
+            <span class="stat-num" id="stat-total">0</span>
+            <span class="stat-label">Empresas Cadastradas</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num" id="stat-ativas">0</span>
+            <span class="stat-label">Empresas Ativas</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num" id="stat-projetos">18</span>
+            <span class="stat-label">Projetos Antigravity</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-num" id="stat-mes">0</span>
+            <span class="stat-label">Cadastros Este Mês</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEARCH & FILTER -->
+    <section class="toolbar container">
+      <div class="search-box">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="7.5" cy="7.5" r="5.5" stroke="#a78bfa" stroke-width="1.8"/><path d="M13 13l3 3" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <input type="text" id="search-input" placeholder="Buscar por razão social, nome fantasia, CNPJ, cidade, projeto..." oninput="renderCards()" />
+      </div>
+      <div class="filter-btns">
+        <button class="filter-btn active" data-filter="all" onclick="setFilter('all',this)">Todas</button>
+        <button class="filter-btn" data-filter="ativa" onclick="setFilter('ativa',this)">Ativas</button>
+        <button class="filter-btn" data-filter="inativa" onclick="setFilter('inativa',this)">Inativas</button>
+        <button class="filter-btn" data-filter="prospect" onclick="setFilter('prospect',this)">Prospects</button>
+      </div>
+    </section>
+
+    <!-- CARDS GRID -->
+    <main class="container" id="cards-area">
+      <div class="cards-grid" id="cards-grid"></div>
+      <div class="empty-state" id="empty-state" style="display:none">
+        <div class="empty-icon">🏢</div>
+        <h2>Nenhuma empresa cadastrada ainda</h2>
+        <p>Comece adicionando uma nova empresa ou projeto para organizar seu ecossistema.</p>
+        <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+          <button class="btn-primary" onclick="openModal()">+ Cadastrar Empresa Agora</button>
+          <button class="btn-secondary" onclick="carregarExemploEmpresa()">Carregar Exemplo Demonstrativo</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- TAB 2: PROJETOS ANTIGRAVITY                     -->
+  <!-- ============================================== -->
+  <div id="tab-projetos" class="tab-content">
+    <div class="container section-pad">
+      <div class="tab-header-row">
+        <div>
+          <span class="badge">Workspace Scratch Antigravity</span>
+          <h2>Projetos Desenvolvidos no Antigravity</h2>
+          <p class="section-desc">Localize, copie o caminho ou o código e vincule qualquer projeto diretamente a uma empresa cadastrada.</p>
+        </div>
+        <div class="header-actions-extra">
+          <button class="btn-primary" onclick="openNovoProjetoModal()">+ Novo Projeto Antigravity</button>
+        </div>
+      </div>
+
+      <div class="toolbar" style="margin-top: 1.5rem;">
+        <div class="search-box">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="7.5" cy="7.5" r="5.5" stroke="#a78bfa" stroke-width="1.8"/><path d="M13 13l3 3" stroke="#a78bfa" stroke-width="1.8" stroke-linecap="round"/></svg>
+          <input type="text" id="search-projetos" placeholder="Buscar projeto Antigravity (ex: vidros, madeira, financeiro, deploy...)" oninput="renderProjetos()" />
+        </div>
+        <div class="filter-btns">
+          <button class="filter-btn active" onclick="filtrarProjetos('todos', this)">Todos</button>
+          <button class="filter-btn" onclick="filtrarProjetos('vidros', this)">Vidros & Esquadrias</button>
+          <button class="filter-btn" onclick="filtrarProjetos('madeira', this)">Madeira & Móveis</button>
+          <button class="filter-btn" onclick="filtrarProjetos('financeiro', this)">Financeiro</button>
+          <button class="filter-btn" onclick="filtrarProjetos('web', this)">Sistemas & Web</button>
+        </div>
+      </div>
+
+      <div class="projetos-grid" id="projetos-grid"></div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- TAB 3: PRINT PARA PROJETO (SCREENSHOT TO CODE) -->
+  <!-- ============================================== -->
+  <div id="tab-print" class="tab-content">
+    <div class="container section-pad">
+      <div class="tab-header-row">
+        <div>
+          <span class="badge">Tecnologia Screenshot-to-App</span>
+          <h2>Transformar Print em Projeto Funcional</h2>
+          <p class="section-desc">Tire um print de qualquer tela ou site, cole aqui com <kbd>Ctrl+V</kbd> ou faça upload e a IA gera a aplicação interativa pronta para rodar.</p>
+        </div>
+      </div>
+
+      <div class="print-workspace">
+        <div class="print-input-panel">
+          <div class="drop-zone" id="drop-zone" onclick="document.getElementById('input-print-file').click()">
+            <input type="file" id="input-print-file" accept="image/*" style="display:none" onchange="handlePrintUpload(event)" />
+            <div id="drop-zone-content">
+              <div class="drop-icon">📸</div>
+              <h3>Cole um Print com <kbd>Ctrl+V</kbd></h3>
+              <p>ou clique aqui para selecionar uma imagem do projeto</p>
+              <span class="drop-hint">Formatos suportados: PNG, JPG, WebP</span>
+            </div>
+            <img id="print-preview-img" style="display:none; max-width:100%; border-radius:10px;" alt="Print carregado" />
+          </div>
+
+          <div class="print-options-card">
+            <h4>Configuração da Interface</h4>
+            <div class="form-group">
+              <label for="print-tipo-projeto">Tipo de Aplicação Detectada:</label>
+              <select id="print-tipo-projeto">
+                <option value="dashboard">Dashboard Administrativo & Gestão</option>
+                <option value="vidros">Sistema de Vidraçaria & Orçamentos (SDVidros)</option>
+                <option value="madeira">Sistema de Vendas de Madeira (SDMadeira)</option>
+                <option value="financeiro">Sistema de Controle Financeiro & Fluxo de Caixa</option>
+                <option value="cadastro">Portal de Clientes & Cadastros</option>
+                <option value="ecommerce">Catálogo de Produtos & Vendas</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="print-nome-app">Nome do Novo Projeto:</label>
+              <input type="text" id="print-nome-app" placeholder="Ex: SD Vidros Pro, Painel Financeiro..." value="App a partir de Print" />
+            </div>
+
+            <!-- Paleta Extraída -->
+            <div id="palette-box" style="margin-top:1rem; display:none;">
+              <span class="detail-label">Paleta Extraída da Imagem:</span>
+              <div class="palette-swatches" id="palette-swatches"></div>
+            </div>
+
+            <button class="btn-primary" style="width:100%; margin-top:1.5rem; justify-content:center;" id="btn-processar-print" onclick="gerarAppDoPrint()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              Gerar Aplicação Funcional do Print
+            </button>
+          </div>
+        </div>
+
+        <div class="print-result-panel">
+          <div class="preview-header">
+            <div class="preview-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <span class="preview-title" id="preview-title-bar">Live Preview Interativo (Pronto para Usar)</span>
+            <div class="preview-actions">
+              <button class="btn-secondary btn-sm" onclick="copiarCodigoPrint()">📋 Copiar Código</button>
+              <button class="btn-secondary btn-sm" onclick="baixarAppPrint()">💾 Baixar HTML</button>
+              <button class="btn-primary btn-sm" onclick="abrirPrintPreviewFullscreen()">🚀 Tela Cheia</button>
+            </div>
+          </div>
+          <div class="preview-frame-container">
+            <iframe id="print-live-frame" sandbox="allow-scripts allow-modals" title="Live Preview"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- TAB 4: ESTÚDIO DE LOGO & BANNER COM IA         -->
+  <!-- ============================================== -->
+  <div id="tab-logo" class="tab-content">
+    <div class="container section-pad">
+      <div class="tab-header-row">
+        <div>
+          <span class="badge">Inteligência Artificial Gráfica</span>
+          <h2>Estúdio de Criação de Logo & Banner</h2>
+          <p class="section-desc">Crie identidades visuais completas, marcas vetoriais e banners em alta definição para sua empresa ou projeto.</p>
+        </div>
+      </div>
+
+      <div class="logo-studio-layout">
+        <!-- FORMULÁRIO DE GERAÇÃO -->
+        <div class="logo-control-panel">
+          <div class="form-group">
+            <label for="ai-brand-name">Nome da Empresa / Marca <span class="req">*</span></label>
+            <input type="text" id="ai-brand-name" placeholder="Ex: SD Vidros, SD Madeira, SD Soluções" value="SD Soluções" />
+          </div>
+          <div class="form-group">
+            <label for="ai-brand-slogan">Slogan ou Subtítulo (Opcional)</label>
+            <input type="text" id="ai-brand-slogan" placeholder="Ex: Soluções Digitais & Inovação" value="Soluções Digitais & Inovação" />
+          </div>
+          <div class="form-group">
+            <label for="ai-specialist">🤖 Modelo de IA Especializada:</label>
+            <select id="ai-specialist" onchange="sugerirEstiloNicho(this.value)">
+              <option value="vidros">🪟 Especialista em Vidraçaria & Esquadrias (SD Vidros)</option>
+              <option value="madeira">🪵 Especialista em Madeireira & Móveis (SD Madeira)</option>
+              <option value="tech" selected>💻 Especialista em Soluções Digitais & Tech (SD Soluções)</option>
+              <option value="financeiro">📈 Especialista em Gestão Financeira (SD Financeiro)</option>
+              <option value="construcao">🏗️ Especialista em Engenharia & Construção Civil</option>
+              <option value="luxo">💎 Especialista em Marcas Minimalistas de Luxo</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="ai-brand-style">Estilo Visual da Marca:</label>
+            <select id="ai-brand-style">
+              <option value="modern-neon">⚡ Moderno Cyber Neon (Roxo & Ciano)</option>
+              <option value="luxury-gold">💎 Luxo & Alta Classe (Dourado & Preto Fosco)</option>
+              <option value="corporate-blue">🏛️ Corporativo Institucional (Azul Real & Prata)</option>
+              <option value="emerald-clean">🌿 Emerald Minimalista (Verde Esmeralda & Menta)</option>
+              <option value="sunset-fiery">🔥 Sunset Fiery (Laranja Âmbar & Coral)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="ai-brand-type">Formato de Criação:</label>
+            <div class="radio-toggle-group">
+              <button type="button" class="radio-pill active" id="btn-tipo-kit" onclick="setAiFormat('kit')">✨ Kit Completo (Logo + Banner)</button>
+              <button type="button" class="radio-pill" id="btn-tipo-logo" onclick="setAiFormat('logo')">Logo Quadrada</button>
+              <button type="button" class="radio-pill" id="btn-tipo-banner" onclick="setAiFormat('banner')">Banner</button>
+            </div>
+          </div>
+
+          <button class="btn-primary btn-ai-hero" style="width:100%; margin-top:1.2rem; justify-content:center;" onclick="gerarLogosAi()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            Criar Nova Logo e Banner com IA Especializada
+          </button>
+
+          <!-- PROMPT GERADO PARA DALL-E / MIDJOURNEY -->
+          <div class="prompt-box-card" style="margin-top:1.2rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+              <span class="detail-label">Prompt Profissional de IA (Midjourney/DALL-E):</span>
+              <button class="btn-copy-mini" onclick="copiarPromptAi()">Copiar</button>
+            </div>
+            <textarea id="ai-generated-prompt" readonly rows="3" class="prompt-textarea"></textarea>
+          </div>
+        </div>
+
+        <!-- PRÉVIA DAS VARIAÇÕES GERADAS -->
+        <div class="logo-preview-panel">
+          <div class="variations-header">
+            <h4>Variações Geradas (Clique para Usar ou Baixar)</h4>
+            <span class="hint-text">Renderização vetorial em alta definição</span>
+          </div>
+          <div class="variations-grid" id="variations-grid">
+            <!-- 4 variações dinâmicas renderizadas em Canvas/SVG -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: CADASTRAR / EDITAR EMPRESA             -->
+  <!-- ============================================== -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
+    <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-header">
+        <div>
+          <span class="modal-badge" id="modal-badge">Nova Empresa</span>
+          <h2 id="modal-title">Cadastrar Empresa</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal()" aria-label="Fechar">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+
+      <!-- BANNER DE ALERTA NO TOPO DO FORMULÁRIO -->
+      <div id="form-alert-banner" class="form-alert-banner" style="display:none;"></div>
+
+      <form class="modal-form" id="empresa-form" onsubmit="salvarEmpresa(event)" novalidate>
+        <input type="hidden" id="form-id" />
+        <input type="hidden" id="f-logo-data" />
+
+        <!-- SEÇÃO 1: Dados Principais & Logo -->
+        <div class="form-section">
+          <div class="form-section-title">
+            <span class="section-num">01</span> Identidade & Dados da Empresa
+          </div>
+
+          <!-- BLOCO DE LOGO DA EMPRESA -->
+          <div class="company-logo-uploader">
+            <div class="logo-preview-box" id="logo-preview-box">
+              <span id="logo-preview-placeholder">🏢 Sem Logo</span>
+              <img id="logo-preview-img" style="display:none; width:100%; height:100%; object-fit:contain; border-radius:10px;" alt="Logo" />
+            </div>
+            <div class="logo-actions-box">
+              <label class="detail-label" style="margin-bottom:4px;">Logo da Empresa</label>
+              <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <button type="button" class="btn-primary btn-sm" onclick="abrirEstudioLogoParaEmpresa()">
+                  ✨ Criar Logo com IA
+                </button>
+                <button type="button" class="btn-secondary btn-sm" onclick="document.getElementById('input-company-logo').click()">
+                  📁 Enviar Imagem
+                </button>
+                <button type="button" class="btn-danger btn-sm" id="btn-remover-logo" style="display:none;" onclick="removerLogoEmpresa()">
+                  Remover
+                </button>
+                <input type="file" id="input-company-logo" accept="image/*" style="display:none;" onchange="handleLogoUpload(event)" />
+              </div>
+              <span class="field-hint">Você pode enviar sua logo ou gerar instantaneamente com a IA.</span>
+            </div>
+          </div>
+
+          <div class="form-grid" style="margin-top:1rem;">
+            <div class="form-group full">
+              <label for="f-razao">Razão Social / Nome da Empresa <span class="req">*</span></label>
+              <input type="text" id="f-razao" placeholder="Ex: SD Soluções Digitais LTDA" required />
+              <span class="field-error" id="err-razao"></span>
+            </div>
+            <div class="form-group">
+              <label for="f-fantasia">Nome Fantasia</label>
+              <input type="text" id="f-fantasia" placeholder="Ex: SD Soluções" />
+            </div>
+            <div class="form-group">
+              <label for="f-cnpj">CNPJ / CPF</label>
+              <input type="text" id="f-cnpj" placeholder="00.000.000/0001-00" maxlength="18" oninput="maskCNPJ(this)" />
+              <span class="field-error" id="err-cnpj"></span>
+            </div>
+            <div class="form-group">
+              <label for="f-ie">Inscrição Estadual</label>
+              <input type="text" id="f-ie" placeholder="Ex: 123.456.789.110" />
+            </div>
+            <div class="form-group">
+              <label for="f-segmento">Segmento / Ramo</label>
+              <select id="f-segmento">
+                <option value="">Selecione o ramo...</option>
+                <option>Vidraçaria / Vidros & Esquadrias</option>
+                <option>Madeireira & Móveis Planejados</option>
+                <option>Construção Civil & Engenharia</option>
+                <option>Tecnologia & Softwares</option>
+                <option>Financeiro & Contábil</option>
+                <option>Comércio & Varejo</option>
+                <option>Indústria</option>
+                <option>Saúde</option>
+                <option>Logística</option>
+                <option>Alimentação</option>
+                <option>Outro</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="f-status">Status da Empresa</label>
+              <select id="f-status">
+                <option value="ativa">Ativa</option>
+                <option value="inativa">Inativa</option>
+                <option value="prospect">Prospect</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- SEÇÃO 2: Contato -->
+        <div class="form-section">
+          <div class="form-section-title">
+            <span class="section-num">02</span> Informações de Contato
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="f-email">E-mail Comercial</label>
+              <input type="email" id="f-email" placeholder="contato@empresa.com.br" />
+              <span class="field-error" id="err-email"></span>
+            </div>
+            <div class="form-group">
+              <label for="f-celular">Celular / WhatsApp (Direto)</label>
+              <input type="text" id="f-celular" placeholder="(00) 90000-0000" maxlength="16" oninput="maskCel(this)" />
+            </div>
+            <div class="form-group">
+              <label for="f-telefone">Telefone Fixo</label>
+              <input type="text" id="f-telefone" placeholder="(00) 0000-0000" maxlength="15" oninput="maskTel(this)" />
+            </div>
+            <div class="form-group">
+              <label for="f-responsavel">Responsável / Contato Principal</label>
+              <input type="text" id="f-responsavel" placeholder="Nome do responsável" />
+            </div>
+            <div class="form-group">
+              <label for="f-site">Website</label>
+              <input type="url" id="f-site" placeholder="https://www.empresa.com.br" />
+            </div>
+            <div class="form-group">
+              <label for="f-instagram">Instagram / Rede Social</label>
+              <input type="text" id="f-instagram" placeholder="@empresa" />
+            </div>
+          </div>
+        </div>
+
+        <!-- SEÇÃO 3: Endereço -->
+        <div class="form-section">
+          <div class="form-section-title">
+            <span class="section-num">03</span> Endereço & Localização
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="f-cep">CEP (Busca Automática)</label>
+              <input type="text" id="f-cep" placeholder="00000-000" maxlength="9" oninput="maskCEP(this)" onblur="buscarCEP()" />
+            </div>
+            <div class="form-group">
+              <label for="f-logradouro">Logradouro / Rua</label>
+              <input type="text" id="f-logradouro" placeholder="Rua, Av., Travessa..." />
+            </div>
+            <div class="form-group short">
+              <label for="f-numero">Número</label>
+              <input type="text" id="f-numero" placeholder="123" />
+            </div>
+            <div class="form-group">
+              <label for="f-complemento">Complemento</label>
+              <input type="text" id="f-complemento" placeholder="Sala, Galpão, Bloco..." />
+            </div>
+            <div class="form-group">
+              <label for="f-bairro">Bairro</label>
+              <input type="text" id="f-bairro" placeholder="Bairro" />
+            </div>
+            <div class="form-group">
+              <label for="f-cidade">Cidade</label>
+              <input type="text" id="f-cidade" placeholder="Cidade" />
+            </div>
+            <div class="form-group short">
+              <label for="f-uf">UF</label>
+              <select id="f-uf">
+                <option value="">UF</option>
+                <option>AC</option><option>AL</option><option>AM</option><option>AP</option>
+                <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
+                <option>GO</option><option>MA</option><option>MG</option><option>MS</option>
+                <option>MT</option><option>PA</option><option>PB</option><option>PE</option>
+                <option>PI</option><option>PR</option><option>RJ</option><option>RN</option>
+                <option>RO</option><option>RR</option><option>RS</option><option>SC</option>
+                <option>SE</option><option>SP</option><option>TO</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- SEÇÃO 4: Projeto Antigravity & Observações -->
+        <div class="form-section">
+          <div class="form-section-title">
+            <span class="section-num">04</span> Projeto Antigravity & Observações
+          </div>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label for="f-projeto">Nome do Projeto Vinculado</label>
+              <input type="text" id="f-projeto" placeholder="Ex: SD Vidros Sistema, E-commerce de Madeira, Portal ERP..." />
+            </div>
+            <div class="form-group full">
+              <label for="f-projeto-select">Ou selecione um projeto existente no Antigravity:</label>
+              <select id="f-projeto-select" onchange="selecionarProjetoExistente(this.value)">
+                <option value="">Selecione um projeto Antigravity existente...</option>
+                <option value="sdvidros">sdvidros (Sistema de Vidraçaria & Esquadrias)</option>
+                <option value="sd-madereira">sd-madereira (Sistema de Vendas de Madeira)</option>
+                <option value="sd-solucoes-digitais">sd-solucoes-digitais (Portal Institucional & Serviços)</option>
+                <option value="SDfinanceiro">SDfinanceiro (Sistema de Gestão Financeira)</option>
+                <option value="sd-financas-pro">sd-financas-pro (Finanças Pro Avançado)</option>
+                <option value="sdconstrucao">sdconstrucao (Sistema Construção Civil)</option>
+                <option value="sdmoveisprojetados">sdmoveisprojetados (Móveis Projetados)</option>
+                <option value="sdplanodecorte">sdplanodecorte (Plano de Corte Otimizado)</option>
+                <option value="whatsapp-multi-pedidos">whatsapp-multi-pedidos (Pedidos via WhatsApp)</option>
+                <option value="cine-sound-hub">cine-sound-hub</option>
+                <option value="city-builder">city-builder</option>
+                <option value="vias-editor">vias-editor</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label for="f-obs">Observações Gerais & Histórico</label>
+              <textarea id="f-obs" rows="3" placeholder="Informações adicionais, detalhes técnicos, datas combinadas, etc..."></textarea>
+            </div>
+          </div>
+        </div>
+
+        <!-- ALERTA ANTES DO BOTÃO SALVAR -->
+        <div id="footer-save-feedback" class="save-feedback-box" style="display:none;"></div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" onclick="closeModal()">Cancelar</button>
+          <button type="submit" class="btn-primary" id="btn-salvar">
+            <svg width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M2 8.5l4 4 8-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Salvar Empresa
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: DETALHES COMPLETOS DA EMPRESA           -->
+  <!-- ============================================== -->
+  <div class="modal-overlay" id="detail-overlay" onclick="closeDetailOutside(event)">
+    <div class="modal modal-detail" id="detail-modal">
+      <div class="modal-header">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div id="detail-logo-avatar" class="card-avatar" style="width:54px; height:54px; font-size:1.5rem;"></div>
+          <div>
+            <span class="modal-badge" id="detail-badge-status">Ativa</span>
+            <h2 id="detail-nome">Nome da Empresa</h2>
+          </div>
+        </div>
+        <button class="modal-close" onclick="closeDetail()">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div class="detail-body" id="detail-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn-danger" id="btn-deletar" onclick="">Excluir</button>
+        <button type="button" class="btn-secondary" id="btn-copiar" onclick="" title="Copiar ficha completa">📋 Copiar Dados</button>
+        <button type="button" class="btn-secondary" id="btn-imprimir" onclick="window.print()" title="Imprimir ou Salvar PDF">🖨️ Imprimir</button>
+        <button type="button" class="btn-secondary" onclick="closeDetail()">Fechar</button>
+        <button type="button" class="btn-primary" id="btn-editar" onclick="">Editar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: NOVO PROJETO ANTIGRAVITY                -->
+  <!-- ============================================== -->
+  <div class="modal-overlay" id="novo-projeto-overlay" onclick="closeNovoProjetoOutside(event)">
+    <div class="modal" style="max-width:550px;">
+      <div class="modal-header">
+        <div>
+          <span class="modal-badge">Antigravity Scratch</span>
+          <h2>Adicionar / Criar Projeto</h2>
+        </div>
+        <button class="modal-close" onclick="closeNovoProjetoModal()">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div style="padding:1.5rem 2rem;">
+        <div class="form-group">
+          <label for="np-nome">Nome do Projeto:</label>
+          <input type="text" id="np-nome" placeholder="Ex: sd-novo-modulo, portal-vendas..." />
+        </div>
+        <div class="form-group" style="margin-top:1rem;">
+          <label for="np-categoria">Categoria:</label>
+          <select id="np-categoria">
+            <option value="vidros">Vidros & Esquadrias</option>
+            <option value="madeira">Madeira & Móveis</option>
+            <option value="financeiro">Financeiro</option>
+            <option value="web">Sistemas & Web</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-top:1rem;">
+          <label for="np-descricao">Descrição do Projeto:</label>
+          <textarea id="np-descricao" rows="2" placeholder="Resumo do objetivo do projeto..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" onclick="closeNovoProjetoModal()">Cancelar</button>
+        <button type="button" class="btn-primary" onclick="salvarNovoProjetoAntigravity()">Salvar Projeto no Catálogo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================== -->
+  <!-- MODAL: BAIXAR APP NO WEB E CELULAR             -->
+  <!-- ============================================== -->
+  <div class="modal-overlay" id="download-app-overlay" onclick="closeModalDownloadAppOutside(event)">
+    <div class="modal" style="max-width:760px;">
+      <div class="modal-header">
+        <div>
+          <span class="modal-badge">PWA & Celular</span>
+          <h2 id="download-modal-title">Baixar & Instalar Aplicativo</h2>
+        </div>
+        <button class="modal-close" onclick="closeModalDownloadApp()" aria-label="Fechar">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 4l12 12M16 4L4 16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+
+      <div class="download-layout">
+        <!-- COLUNA 1: INSTALAR NO CELULAR (QR CODE & PWA) -->
+        <div class="download-card">
+          <div class="download-card-header">
+            <div class="download-card-icon">📱</div>
+            <div>
+              <div class="download-card-title">Instalar no Celular</div>
+              <div class="download-card-sub">Android & iPhone (Sem precisar de Loja)</div>
+            </div>
+          </div>
+
+          <div class="qr-code-section">
+            <div class="qr-canvas-box">
+              <img id="qr-code-img" src="" alt="QR Code para Celular" style="width:180px;height:180px;display:block;border-radius:6px;background:#fff;" />
+              <canvas id="qr-code-canvas" style="display:none;"></canvas>
+            </div>
+            <div class="qr-instruction">
+              📸 <strong>Aponte a câmera do celular</strong> para abrir o app diretamente no seu smartphone!
+            </div>
+            <div id="mobile-url-display" style="color:#38bdf8; font-family:'JetBrains Mono', monospace; font-size:0.75rem; word-break:break-all; text-align:center;"></div>
+          </div>
+
+          <div class="step-list">
+            <div class="step-item">
+              <span class="step-badge">1</span>
+              <span>Abra a câmera ou leitor de QR Code no celular (conectado no mesmo Wi-Fi).</span>
+            </div>
+            <div class="step-item">
+              <span class="step-badge">2</span>
+              <span>Toque no link que aparecer na tela para abrir o app.</span>
+            </div>
+            <div class="step-item">
+              <span class="step-badge">3</span>
+              <span>No <strong>Android (Chrome)</strong>: Toque em <strong>⋮ > Instalar aplicativo</strong>.<br/>No <strong>iPhone (Safari)</strong>: Toque em <strong>Compartilhar ⎋ > Adicionar à Tela de Início</strong>.</span>
+            </div>
+          </div>
+
+          <button class="btn-accent" style="width:100%; justify-content:center;" onclick="copiarLinkDiretoApp()">
+            📋 Copiar Link do Celular
+          </button>
+        </div>
+
+        <!-- COLUNA 2: INSTALAR NO COMPUTADOR / WEB -->
+        <div class="download-card">
+          <div class="download-card-header">
+            <div class="download-card-icon">💻</div>
+            <div>
+              <div class="download-card-title">Instalar no Computador</div>
+              <div class="download-card-sub">Atalho Direto & Execução Instantânea</div>
+            </div>
+          </div>
+
+          <p style="font-size:0.86rem; color:var(--text-muted); line-height:1.5;">
+            Execute o sistema como aplicativo de área de trabalho ou baixe o pacote pronto para uso offline sem depender de servidor.
+          </p>
+
+          <div style="display:flex; flex-direction:column; gap:0.75rem; margin-top:0.5rem;">
+            <a id="btn-link-executar" href="#" target="_blank" class="btn-primary" style="justify-content:center; text-decoration:none; text-align:center;">
+              🚀 Acessar / Executar Agora no Navegador
+            </a>
+            <button class="btn-secondary" style="justify-content:center;" onclick="baixarAtalhoBat()">
+              🖥️ Baixar Atalho para Área de Trabalho (.bat)
+            </button>
+            <button class="btn-secondary" style="justify-content:center;" onclick="baixarPacoteProjeto()">
+              📦 Baixar Arquivo HTML do Projeto
+            </button>
+          </div>
+
+          <div class="projeto-path-box" id="download-modal-path" style="margin-top:auto;">
+            Carregando caminho...
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" onclick="closeModalDownloadApp()">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
