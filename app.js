@@ -15,18 +15,18 @@ let currentGeneratedAppCode = '';
 
 /* ── PROJETOS ANTIGRAVITY REAIS DETECTADOS NO WORKSPACE ── */
 const PROJETOS_PADRAO = [
-  { id: 'p1', nome: 'sdvidros', categoria: 'vidros', desc: 'Sistema Completo de Vidraçaria, Orçamentos e Controle de Esquadrias', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sdvidros' },
-  { id: 'p2', nome: 'sd-madereira', categoria: 'madeira', desc: 'Sistema de Vendas, Estoque e Pedidos de Madeira e Compensados', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sd-madereira' },
-  { id: 'p3', nome: 'sd-solucoes-digitais', categoria: 'web', desc: 'Portal Institucional, Apresentação de Soluções e Portfólio Digital', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sd-solucoes-digitais' },
-  { id: 'p4', nome: 'SDfinanceiro', categoria: 'financeiro', desc: 'Sistema Financeiro com Fluxo de Caixa, Entradas, Saídas e DRE', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/SDfinanceiro' },
-  { id: 'p5', nome: 'sd-financas-pro', categoria: 'financeiro', desc: 'Gestão Financeira Avançada com Gráficos e Previsões', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sd-financas-pro' },
-  { id: 'p6', nome: 'sdconstrucao', categoria: 'web', desc: 'Gerenciador de Obras, Medições e Serviços de Construção Civil', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sdconstrucao' },
-  { id: 'p7', nome: 'sdmoveisprojetados', categoria: 'madeira', desc: 'Módulo de Catálogo e Projetos de Móveis Planejados Sob Medida', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sdmoveisprojetados' },
-  { id: 'p8', nome: 'sdplanodecorte', categoria: 'madeira', desc: 'Otimizador de Plano de Corte para Chapas e Painéis de Madeira/Vidro', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sdplanodecorte' },
-  { id: 'p9', nome: 'whatsapp-multi-pedidos', categoria: 'web', desc: 'Central de Atendimento e Geração de Pedidos Automáticos via WhatsApp', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/whatsapp-multi-pedidos' },
-  { id: 'p10', nome: 'deploy_sd', categoria: 'web', desc: 'Scripts e Configurações para Publicação e Deploy Contínuo', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/deploy_sd' },
-  { id: 'p11', nome: 'cine-sound-hub', categoria: 'web', desc: 'Plataforma Interativa Multimídia e Hub de Áudio/Vídeo', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/cine-sound-hub' },
-  { id: 'p12', nome: 'city-builder', categoria: 'web', desc: 'Simulador e Ferramenta Interativa de Planejamento Urbano', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/city-builder' }
+  { id: 'p1', nome: 'sdvidros', categoria: 'vidros', desc: 'Sistema Completo de Vidraçaria, Orçamentos e Controle de Esquadrias', path: 'C:/Users/User/Desktop/sdvidros', vercelUrl: 'https://sdvidros.vercel.app/' },
+  { id: 'p2', nome: 'sd-madereira', categoria: 'madeira', desc: 'Sistema de Vendas, Estoque e Pedidos de Madeira e Compensados', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sd-madereira', vercelUrl: '' },
+  { id: 'p3', nome: 'sd-solucoes-digitais', categoria: 'web', desc: 'Portal Institucional, Apresentação de Soluções e Portfólio Digital', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sd-solucoes-digitais', vercelUrl: '' },
+  { id: 'p4', nome: 'SDfinanceiro', categoria: 'financeiro', desc: 'Sistema Financeiro com Fluxo de Caixa, Entradas, Saídas e DRE', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/SDfinanceiro', vercelUrl: '' },
+  { id: 'p5', nome: 'sd-financas-pro', categoria: 'financeiro', desc: 'Gestão Financeira Avançada com Gráficos e Previsões', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sd-financas-pro', vercelUrl: '' },
+  { id: 'p6', nome: 'sdconstrucao', categoria: 'web', desc: 'Gerenciador de Obras, Medições e Serviços de Construção Civil', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sdconstrucao', vercelUrl: '' },
+  { id: 'p7', nome: 'sdmoveisprojetados', categoria: 'madeira', desc: 'Módulo de Catálogo e Projetos de Móveis Planejados Sob Medida', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sdmoveisprojetados', vercelUrl: '' },
+  { id: 'p8', nome: 'sdplanodecorte', categoria: 'madeira', desc: 'Otimizador de Plano de Corte para Chapas e Painéis de Madeira/Vidro', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sdplanodecorte', vercelUrl: '' },
+  { id: 'p9', nome: 'whatsapp-multi-pedidos', categoria: 'web', desc: 'Central de Atendimento e Geração de Pedidos Automáticos via WhatsApp', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/whatsapp-multi-pedidos', vercelUrl: '' },
+  { id: 'p10', nome: 'deploy_sd', categoria: 'web', desc: 'Scripts e Configurações para Publicação e Deploy Contínuo', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/deploy_sd', vercelUrl: '' },
+  { id: 'p11', nome: 'cine-sound-hub', categoria: 'web', desc: 'Plataforma Interativa Multimídia e Hub de Áudio/Vídeo', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/cine-sound-hub', vercelUrl: '' },
+  { id: 'p12', nome: 'city-builder', categoria: 'web', desc: 'Simulador e Ferramenta Interativa de Planejamento Urbano', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/city-builder', vercelUrl: '' }
 ];
 
 /* ── INICIALIZAÇÃO ── */
@@ -48,13 +48,23 @@ function loadData() {
     empresas = rawEmpresas ? JSON.parse(rawEmpresas) : [];
 
     const rawProjetos = localStorage.getItem(STORAGE_KEY_PROJETOS);
-    projetosAntigravity = rawProjetos ? JSON.parse(rawProjetos) : PROJETOS_PADRAO;
+    if (rawProjetos) {
+      const stored = JSON.parse(rawProjetos);
+      // Mescla: aplica vercelUrl e path atualizados do PROJETOS_PADRAO sobre dados salvos
+      projetosAntigravity = stored.map(p => {
+        const defaults = PROJETOS_PADRAO.find(d => d.id === p.id);
+        return defaults ? { ...p, vercelUrl: defaults.vercelUrl, path: defaults.path } : p;
+      });
+    } else {
+      projetosAntigravity = PROJETOS_PADRAO;
+    }
   } catch (err) {
     console.error('Erro ao ler localStorage:', err);
     empresas = [];
     projetosAntigravity = PROJETOS_PADRAO;
   }
 }
+
 
 function saveData() {
   try {
@@ -667,11 +677,11 @@ function renderProjetos() {
         <span class="projeto-tag">${p.categoria}</span>
       </div>
       <div class="projeto-desc">${p.desc}</div>
-      <div class="projeto-path-box" title="${p.path}">📁 ${p.path}</div>
+      <div class="projeto-path-box" title="${p.vercelUrl || p.path}">${p.vercelUrl ? '🌐 ' + p.vercelUrl : '📁 ' + p.path}</div>
       <div class="projeto-actions">
-        <button class="btn-success btn-sm" onclick="acessarProjetoDireto('${p.path}')">🚀 Acessar Projeto</button>
+        <button class="btn-success btn-sm" onclick="acessarProjetoDireto('${p.path}', '${p.vercelUrl || ''}')">🚀 Acessar Projeto</button>
         <button class="btn-accent btn-sm" onclick="abrirModalDownloadApp('${p.id}')">📲 Baixar no Celular / Web</button>
-        <button class="btn-secondary btn-sm" onclick="copiarCaminhoProjeto('${p.path}')">📋 Copiar Link</button>
+        <button class="btn-secondary btn-sm" onclick="copiarCaminhoProjeto('${p.path}', '${p.vercelUrl || ''}')">📋 Copiar Link</button>
         <button class="btn-secondary btn-sm" onclick="vincularProjetoAEmpresa('${p.nome}')">🔗 Vincular</button>
         <button class="btn-danger btn-sm" onclick="excluirProjetoAntigravity('${p.id}', event)">🗑️ Excluir</button>
       </div>
@@ -701,10 +711,10 @@ function getProjectIndexUrl(path) {
   return clean.startsWith('file:///') ? clean : ('file:///' + clean.replace(/^file:\/\//, ''));
 }
 
-function acessarProjetoDireto(path) {
+function acessarProjetoDireto(path, vercelUrl) {
   const nome = getProjectNameFromPath(path);
-  const httpUrl = `http://localhost:${SERVER_PORT}/${nome}/index.html`;
-  window.open(httpUrl, '_blank');
+  const url = vercelUrl || `http://localhost:${SERVER_PORT}/${nome}/index.html`;
+  window.open(url, '_blank');
   showToast(`🚀 Abrindo ${nome} no navegador!`, 'success');
 }
 
@@ -721,11 +731,11 @@ function excluirProjetoAntigravity(id, event) {
   showToast(`Projeto "${nome}" excluído do catálogo.`, 'error');
 }
 
-function copiarCaminhoProjeto(path) {
+function copiarCaminhoProjeto(path, vercelUrl) {
   const nome = getProjectNameFromPath(path);
-  const url = `http://localhost:${SERVER_PORT}/${nome}/index.html`;
+  const url = vercelUrl || `http://localhost:${SERVER_PORT}/${nome}/index.html`;
   navigator.clipboard.writeText(url)
-    .then(() => showToast(`Link do projeto copiado: ${url}`, 'success'))
+    .then(() => showToast(`✅ Link copiado: ${url}`, 'success'))
     .catch(() => showToast('Erro ao copiar link.', 'error'));
 }
 
@@ -739,10 +749,13 @@ function abrirModalDownloadApp(id) {
 
   document.getElementById('download-modal-title').textContent = `Baixar App: ${p.nome}`;
 
-  const desktopUrl = `http://localhost:${SERVER_PORT}/${p.nome}/index.html`;
-  const mobileUrl  = `http://${LOCAL_IP}:${SERVER_PORT}/${p.nome}/index.html`;
+  const desktopUrl = p.vercelUrl || `http://localhost:${SERVER_PORT}/${p.nome}/index.html`;
+  const mobileUrl  = p.vercelUrl || `http://${LOCAL_IP}:${SERVER_PORT}/${p.nome}/index.html`;
+  const isVercel = !!p.vercelUrl;
 
-  document.getElementById('download-modal-path').textContent = `🔗 Computador: ${desktopUrl}`;
+  document.getElementById('download-modal-path').textContent = isVercel
+    ? `🌐 Online (Vercel): ${desktopUrl}`
+    : `🔗 Local (Computador): ${desktopUrl}`;
 
   // Botão direto no modal para nunca ser bloqueado pelo navegador
   const btnExecutar = document.getElementById('btn-link-executar');
@@ -786,9 +799,10 @@ function executarProjetoAtual() {
 
 function copiarLinkDiretoApp() {
   if (!currentDownloadProject) return;
-  const mobileUrl = `http://${LOCAL_IP}:${SERVER_PORT}/${currentDownloadProject.nome}/index.html`;
+  const p = currentDownloadProject;
+  const mobileUrl = p.vercelUrl || `http://${LOCAL_IP}:${SERVER_PORT}/${p.nome}/index.html`;
   navigator.clipboard.writeText(mobileUrl)
-    .then(() => showToast(`Link do celular copiado: ${mobileUrl}`, 'success'))
+    .then(() => showToast(`✅ Link copiado: ${mobileUrl}`, 'success'))
     .catch(() => showToast('Erro ao copiar link.', 'error'));
 }
 
