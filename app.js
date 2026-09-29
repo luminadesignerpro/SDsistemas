@@ -15,19 +15,20 @@ let currentGeneratedAppCode = '';
 
 /* ── PROJETOS ANTIGRAVITY REAIS DETECTADOS NO WORKSPACE ── */
 const PROJETOS_PADRAO = [
-  { id: 'p1', nome: 'sdvidros', categoria: 'vidros', desc: 'Sistema Completo de Vidraçaria, Orçamentos e Controle de Esquadrias', path: 'C:/Users/User/Desktop/sdvidros', vercelUrl: 'https://sdvidros.vercel.app/' },
-  { id: 'p2', nome: 'sd-madereira', categoria: 'madeira', desc: 'Sistema de Vendas, Estoque e Pedidos de Madeira e Compensados', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sd-madereira', vercelUrl: '' },
-  { id: 'p3', nome: 'sd-solucoes-digitais', categoria: 'web', desc: 'Portal Institucional, Apresentação de Soluções e Portfólio Digital', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sd-solucoes-digitais', vercelUrl: '' },
-  { id: 'p4', nome: 'SDfinanceiro', categoria: 'financeiro', desc: 'Sistema Financeiro com Fluxo de Caixa, Entradas, Saídas e DRE', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/SDfinanceiro', vercelUrl: '' },
-  { id: 'p5', nome: 'sd-financas-pro', categoria: 'financeiro', desc: 'Gestão Financeira Avançada com Gráficos e Previsões', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sd-financas-pro', vercelUrl: '' },
-  { id: 'p6', nome: 'sdconstrucao', categoria: 'web', desc: 'Gerenciador de Obras, Medições e Serviços de Construção Civil', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sdconstrucao', vercelUrl: '' },
-  { id: 'p7', nome: 'sdmoveisprojetados', categoria: 'madeira', desc: 'Módulo de Catálogo e Projetos de Móveis Planejados Sob Medida', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sdmoveisprojetados', vercelUrl: '' },
-  { id: 'p8', nome: 'sdplanodecorte', categoria: 'madeira', desc: 'Otimizador de Plano de Corte para Chapas e Painéis de Madeira/Vidro', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sdplanodecorte', vercelUrl: '' },
-  { id: 'p9', nome: 'whatsapp-multi-pedidos', categoria: 'web', desc: 'Central de Atendimento e Geração de Pedidos Automáticos via WhatsApp', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/whatsapp-multi-pedidos', vercelUrl: '' },
-  { id: 'p10', nome: 'deploy_sd', categoria: 'web', desc: 'Scripts e Configurações para Publicação e Deploy Contínuo', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/deploy_sd', vercelUrl: '' },
-  { id: 'p11', nome: 'cine-sound-hub', categoria: 'web', desc: 'Plataforma Interativa Multimídia e Hub de Áudio/Vídeo', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/cine-sound-hub', vercelUrl: '' },
-  { id: 'p12', nome: 'city-builder', categoria: 'web', desc: 'Simulador e Ferramenta Interativa de Planejamento Urbano', path: 'C:/Users/User/.gemini/antigravity-ide/scratch/city-builder', vercelUrl: '' }
+  { id: 'p1',  nome: 'sdvidros',              categoria: 'vidros',     desc: 'Sistema Completo de Vidraçaria, Orçamentos e Controle de Esquadrias',         path: 'C:/Users/User/Desktop/sdvidros',                                   vercelUrl: 'https://sdvidros.vercel.app/' },
+  { id: 'p2',  nome: 'sd-madereira',          categoria: 'madeira',    desc: 'Sistema de Vendas, Estoque e Pedidos de Madeira e Compensados',                path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sd-madereira',       vercelUrl: '' },
+  { id: 'p3',  nome: 'sd-solucoes-digitais',  categoria: 'web',        desc: 'Portal Institucional, Apresentação de Soluções e Portfólio Digital',           path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sd-solucoes-digitais', vercelUrl: 'https://sd-solucoes-digitais.vercel.app/' },
+  { id: 'p4',  nome: 'SDfinanceiro',          categoria: 'financeiro', desc: 'Sistema Financeiro com Fluxo de Caixa, Entradas, Saídas e DRE',               path: 'C:/Users/User/.gemini/antigravity-ide/scratch/SDfinanceiro',       vercelUrl: 'https://sdfinanceiro.vercel.app/' },
+  { id: 'p5',  nome: 'sd-financas-pro',       categoria: 'financeiro', desc: 'Gestão Financeira Avançada com Gráficos e Previsões',                          path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sd-financas-pro',   vercelUrl: '' },
+  { id: 'p6',  nome: 'sdconstrucao',          categoria: 'web',        desc: 'Gerenciador de Obras, Medições e Serviços de Construção Civil',                path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sdconstrucao',      vercelUrl: 'https://sdconstrucoes.vercel.app/' },
+  { id: 'p7',  nome: 'sdmoveisprojetados',    categoria: 'madeira',    desc: 'Módulo de Catálogo e Projetos de Móveis Planejados Sob Medida',                path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sdmoveisprojetados', vercelUrl: 'https://sdmoveisprojetados.vercel.app/' },
+  { id: 'p8',  nome: 'sdplanodecorte',        categoria: 'madeira',    desc: 'Otimizador de Plano de Corte para Chapas e Painéis de Madeira/Vidro',         path: 'C:/Users/User/.gemini/antigravity-ide/scratch/sdplanodecorte',   vercelUrl: 'https://sdplanodecorte.vercel.app/' },
+  { id: 'p9',  nome: 'whatsapp-multi-pedidos',categoria: 'web',        desc: 'Central de Atendimento e Geração de Pedidos Automáticos via WhatsApp',        path: 'C:/Users/User/.gemini/antigravity-ide/scratch/whatsapp-multi-pedidos', vercelUrl: '' },
+  { id: 'p10', nome: 'deploy_sd',             categoria: 'web',        desc: 'Scripts e Configurações para Publicação e Deploy Contínuo',                   path: 'C:/Users/User/.gemini/antigravity-ide/scratch/deploy_sd',         vercelUrl: '' },
+  { id: 'p11', nome: 'cine-sound-hub',        categoria: 'web',        desc: 'Plataforma Interativa Multimídia e Hub de Áudio/Vídeo',                        path: 'C:/Users/User/.gemini/antigravity-ide/scratch/cine-sound-hub',   vercelUrl: '' },
+  { id: 'p12', nome: 'city-builder',          categoria: 'web',        desc: 'Simulador e Ferramenta Interativa de Planejamento Urbano',                    path: 'C:/Users/User/.gemini/antigravity-ide/scratch/city-builder',     vercelUrl: '' }
 ];
+
 
 /* ── INICIALIZAÇÃO ── */
 document.addEventListener('DOMContentLoaded', () => {

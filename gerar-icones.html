@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>SD Sistemas — Gerador de Ícones PWA</title>
+  <style>
+    body { background: #090a12; color: #fff; font-family: sans-serif; padding: 20px; }
+    h2 { color: #6366f1; }
+    .grid { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 20px; }
+    .item { text-align: center; }
+    canvas { border: 1px solid #333; border-radius: 8px; }
+    p { font-size: 12px; color: #aaa; margin: 4px 0; }
+    button { background: #6366f1; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-size: 16px; margin-top: 20px; }
+    button:hover { background: #4f46e5; }
+    #status { margin-top: 12px; color: #22c55e; }
+  </style>
+</head>
+<body>
+  <h2>⚡ Gerador de Ícones PWA — SD Sistemas</h2>
+  <p>Clique em "Gerar e Baixar Todos" para criar os ícones PNG necessários para o PWA.</p>
+  <button onclick="gerarTodos()">📥 Gerar e Baixar Todos os Ícones</button>
+  <div id="status"></div>
+  <div class="grid" id="grid"></div>
+
+  <script>
+    const SIZES = [72, 96, 128, 144, 152, 192, 384, 512];
+
+    function desenharLogo(canvas, size) {
+      const ctx = canvas.getContext('2d');
+      canvas.width = size;
+      canvas.height = size;
+
+      const s = size;
+      const cx = s / 2;
+      const cy = s / 2;
+
+      // Fundo azul escuro
+      ctx.fillStyle = '#090a12';
+      ctx.fillRect(0, 0, s, s);
+
+      // Círculo de fundo sutil
+      const bgGrad = ctx.createRadialGradient(cx, cy * 0.9, 0, cx, cy, s * 0.55);
+      bgGrad.addColorStop(0, 'rgba(99,102,241,0.15)');
+      bgGrad.addColorStop(1, 'rgba(9,10,18,0)');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, s, s);
+
+      // Fonte escalada
+      const fS = s * 0.42;
+      const fSD = s * 0.18;
+
+      // Letra S — gradiente azul
+      const gradS = ctx.createLinearGradient(cx - s*0.28, 0, cx + s*0.05, s*0.65);
+      gradS.addColorStop(0, '#38bdf8');
+      gradS.addColorStop(0.5, '#3b82f6');
+      gradS.addColorStop(1, '#1d4ed8');
+
+      ctx.font = `900 ${fS}px Arial Black, Impact, sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillStyle = gradS;
+      ctx.fillText('S', cx - s * 0.17, cy * 0.85);
+
+      // Letra D — gradiente branco/prata
+      const gradD = ctx.createLinearGradient(cx, 0, cx + s*0.3, s*0.65);
+      gradD.addColorStop(0, '#ffffff');
+      gradD.addColorStop(1, '#94a3b8');
+
+      ctx.fillStyle = gradD;
+      ctx.fillText('D', cx + s * 0.17, cy * 0.85);
+
+      // Ícone </> dentro do D
+      const codeSize = s * 0.1;
+      ctx.font = `600 ${codeSize}px JetBrains Mono, monospace`;
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillText('</>', cx + s * 0.17, cy * 0.85);
+
+      // Linha divisória
+      const lineY = cy * 1.35;
+      ctx.beginPath();
+      ctx.moveTo(cx - s * 0.38, lineY);
+      ctx.lineTo(cx + s * 0.38, lineY);
+      ctx.strokeStyle = '#3b82f6';
+      ctx.lineWidth = s * 0.008;
+      ctx.stroke();
+
+      // Texto SDSISTEMAS
+      ctx.font = `800 ${fSD}px Arial Black, sans-serif`;
+      ctx.textAlign = 'center';
+
+      // SD em azul
+      ctx.fillStyle = '#38bdf8';
+      const sdW = ctx.measureText('SD').width;
+      const totalW = ctx.measureText('SDSISTEMAS').width;
+      const startX = cx - totalW / 2;
+
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillText('SD', cx - totalW * 0.22, cy * 1.5);
+      ctx.fillStyle = '#ffffff';
+      ctx.fillText('SISTEMAS', cx + totalW * 0.18, cy * 1.5);
+
+      // Subtítulo
+      const subSize = s * 0.055;
+      ctx.font = `500 ${subSize}px Arial, sans-serif`;
+      ctx.fillStyle = '#64748b';
+      ctx.fillText('CRIADOR DE PROJETOS WEBAPP', cx, cy * 1.75);
+    }
+
+    function gerarCanvas(size) {
+      const canvas = document.createElement('canvas');
+      desenharLogo(canvas, size);
+      return canvas;
+    }
+
+    function gerarTodos() {
+      const grid = document.getElementById('grid');
+      const status = document.getElementById('status');
+      grid.innerHTML = '';
+      status.textContent = '⏳ Gerando ícones...';
+
+      let count = 0;
+      SIZES.forEach((size, i) => {
+        setTimeout(() => {
+          const canvas = gerarCanvas(size);
+          
+          // Mostrar no grid
+          const div = document.createElement('div');
+          div.className = 'item';
+          div.appendChild(canvas);
+          const p = document.createElement('p');
+          p.textContent = `${size}x${size}`;
+          div.appendChild(p);
+          grid.appendChild(div);
+
+          // Baixar automaticamente
+          const link = document.createElement('a');
+          link.download = `icon-${size}.png`;
+          link.href = canvas.toDataURL('image/png');
+          link.click();
+
+          count++;
+          if (count === SIZES.length) {
+            status.textContent = `✅ ${count} ícones gerados! Mova os arquivos para a pasta /icons/ do projeto SDsistemas.`;
+          }
+        }, i * 200);
+      });
+    }
+
+    // Pré-visualizar ao carregar
+    window.onload = () => {
+      const grid = document.getElementById('grid');
+      [192, 512].forEach(size => {
+        const canvas = gerarCanvas(size);
+        const div = document.createElement('div');
+        div.className = 'item';
+        div.appendChild(canvas);
+        const p = document.createElement('p');
+        p.textContent = `Preview ${size}x${size}`;
+        div.appendChild(p);
+        grid.appendChild(div);
+      });
+    };
+  </script>
+</body>
+</html>

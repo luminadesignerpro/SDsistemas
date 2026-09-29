@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -8,7 +8,32 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#6366f1" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="SDSistemas" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+  <meta name="msapplication-TileImage" content="/icons/icon-144.png" />
+  <meta name="msapplication-TileColor" content="#6366f1" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="SD Sistemas — Criador de Projetos WebApp" />
+  <meta property="og:description" content="Gerencie empresas e projetos WebApp com IA." />
+  <meta property="og:image" content="/icons/icon-512.png" />
+  <meta property="og:type" content="website" />
+  <!-- Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js')
+          .then(function(r){ console.log('SW registrado:', r.scope); })
+          .catch(function(e){ console.warn('SW erro:', e); });
+      });
+    }
+  </script>
 </head>
 <body>
 
